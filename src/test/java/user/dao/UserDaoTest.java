@@ -31,6 +31,10 @@ public class UserDaoTest extends BaseTest {
         userDao.update(expected);
         actual = userDao.findByUserId(expected.getUserId());
         softly.assertThat(actual).isEqualTo(expected);
+
+        userDao.delete(expected);
+        actual = userDao.findByUserId(expected.getUserId());
+        softly.assertThat(actual).isNull();
     }
 
     @Test
@@ -38,5 +42,12 @@ public class UserDaoTest extends BaseTest {
         UserDao userDao = new UserDao();
         List<User> users = userDao.findAll();
         softly.assertThat(users).hasSize(1);
+    }
+
+    @Test
+    public void findById() throws Exception {
+        UserDao userDao = new UserDao();
+        User user = userDao.findByUserId("admin");
+        softly.assertThat("자바지기").isEqualTo(user.getName());
     }
 }
