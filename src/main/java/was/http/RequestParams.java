@@ -7,7 +7,7 @@ import was.util.HttpRequestUtils;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RequestParams {
+public class RequestParams {		// 요청 메시지 바디
 	private static final Logger log = LoggerFactory.getLogger(RequestParams.class);
 	
 	private Map<String, String> params = new HashMap<>();

@@ -1,6 +1,7 @@
 package was;
 
 import core.mvc.RequestMapping;
+import core.nmvc.HandlerExecution;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import user.web.Controller;
@@ -23,12 +24,12 @@ public class RequestHandler implements Runnable {
         this.connection = connectionSocket;
     }
 
-    public void run() {
+    public void run() {     //dispatcher servlet
         log.debug("New Client Connect! Connected IP : {}, Port : {}", connection.getInetAddress(),
                 connection.getPort());
 
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
-            HttpRequest request = new HttpRequest(in);
+            HttpRequest request = new HttpRequest(in);      // 클라이언트의 요청 메시지를 만들고
             HttpResponse response = new HttpResponse(out);
 
             if (request.getCookies().getCookie(HttpSessions.SESSION_ID_NAME) == null) {
@@ -44,6 +45,8 @@ public class RequestHandler implements Runnable {
             }
         } catch (IOException e) {
             log.error(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

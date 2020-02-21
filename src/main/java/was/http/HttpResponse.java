@@ -17,7 +17,7 @@ public class HttpResponse {
 
     private DataOutputStream dos = null;
 
-    private Map<String, String> headers = new HashMap<String, String>();
+    private Map<String, String> headers = new HashMap<>();
 
     public HttpResponse(OutputStream out) {
         dos = new DataOutputStream(out);
@@ -37,7 +37,7 @@ public class HttpResponse {
             } else {
                 headers.put("Content-Type", "text/html;charset=utf-8");
             }
-            headers.put("Content-Length", body.length + "");
+            headers.put("Content-Length", String.valueOf(body.length));
             response200Header(body.length);
             responseBody(body);
         } catch (IOException e) {

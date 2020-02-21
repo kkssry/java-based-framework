@@ -1,5 +1,6 @@
 package user.web;
 
+import core.annotation.RequestMapping;
 import user.dao.DataBase;
 import user.domain.User;
 import was.http.HttpRequest;
@@ -7,6 +8,7 @@ import was.http.HttpResponse;
 import was.http.HttpSession;
 
 public class LoginController extends AbstractController {
+
     @Override
     public void doPost(HttpRequest request, HttpResponse response) {
         User user = DataBase.findUserById(request.getParameter("userId"));
@@ -23,3 +25,4 @@ public class LoginController extends AbstractController {
         }
     }
 }
+

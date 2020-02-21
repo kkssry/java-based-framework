@@ -11,7 +11,7 @@ import java.util.List;
 
 public class JdbcTemplate {
 
-    public void testUpdate(String sql, Object... values) throws SQLException {
+    public void sendQueryWithMultiArray(String sql, Object... values) throws SQLException {
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql)) {
 
@@ -23,27 +23,26 @@ public class JdbcTemplate {
 
     }
 
-    public void update(String sql, PreparedStatementSetter pss) throws SQLException {
+    public void sendQuery(String sql, PreparedStatementSetter pss) throws SQLException {
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql)) {
             pss.setValues(pstmt);
             pstmt.executeUpdate();
         }
-
     }
 
-    public <T> List<T> findAll(String sql, PreparedStatementSetter pss, CreateRowMapper rowMapper) throws SQLException {
+    public <T> List<T> findAll(String sql, PreparedStatementSetter pss, CreateRowMapper rm) throws SQLException {
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql)) {
             pss.setValues(pstmt);
             try (ResultSet rs = pstmt.executeQuery()) {
-                return findAllObjects(rs, rowMapper);
+                return findAllObjects(rs, rm);
             }
         }
     }
 
-    public <T> T findOne(String sql, PreparedStatementSetter pss, CreateRowMapper rowMapper) throws SQLException {
-        List<T> originObjects = findAll(sql, pss, rowMapper);
+    public <T> T findOne(String sql, PreparedStatementSetter pss, CreateRowMapper rm) throws SQLException {
+        List<T> originObjects = findAll(sql, pss, rm);
         if (originObjects.isEmpty()) {
             return null;
         }

@@ -32,4 +32,6 @@ public class HttpResponseTest {
     private OutputStream createOutputStream(String filename) throws FileNotFoundException {
         return new FileOutputStream(new File(testDirectory + filename));
     }
+
 }
+
